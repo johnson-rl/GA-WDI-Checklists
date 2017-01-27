@@ -7,7 +7,7 @@ For example, the rails link is:
 [How to set up a rails app](https://github.com/johnson-rl/GA-WDI-Checklists/blob/master/Set-up-a-rails-app.md)
 ```
 
-*Shout out to Zach for getting us started with this rails checklist!*
+*Shout out to Zach for getting us started with the rails checklist!*
 
 # GA-WDI-Checklists
 
