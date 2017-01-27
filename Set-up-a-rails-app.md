@@ -146,3 +146,47 @@ class ArticlesController < ApplicationController
 end
 ```
 * [ ] Add the view. Create a new file at app/views/articles/new.html and write "New Article"
+
+###Setting up a relationship
+
+[See the cheatsheet provided in class](https://github.com/sf-wdi-34/rails-associations/blob/master/cheatsheet.md)
+
+
+For One to Many relationships
+* [ ] Add "owned_by" to the model of the resource that will only belong to one other object
+* [ ] Add "has_many" to the model of the resource that will have many of another object type
+* [ ] Create a migration that sets up the data relationships in your database
+The terminal commands to set up the migration will be one of the following:
+
+```
+rails generate migration AddOwnerReferenceToPets owner:references
+
+#####Or
+
+rails generate migration AddOwnerReferenceToPets owner:belongs_to
+```
+* [ ] Verify that your migration is correct.  
+The new migrations should look similar to the one below.  The line "index: true" allows this piece of data to be looked up quickly when you make queries to your database.
+```
+class AddOwnerReferenceToPets < ActiveRecord::Migration
+  def change
+    add_reference :pets, :owner, index: true, foreign_key: true
+  end
+end
+```
+
+* [ ] Edit your controllers to make the foreign keys save properly.  Use your shovels!  "<<"
+```
+#Here's a sample create
+def create
+    owner = Owner.find(params[:owner_id])
+    new_pet = Pet.new(pet_params)
+    if new_pet.save
+      owner.pets << new_pet
+      redirect_to owner_pet_path(owner, new_pet)
+    else
+      flash[:error] = new_pet.errors.full_messages.join(", ")
+      redirect_to new_owner_pet_path(owner)
+    end
+  end
+```
